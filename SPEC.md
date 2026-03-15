@@ -228,20 +228,79 @@ components
 
 # 5. Database Design
 
-## Users Table
+Authentication tables are fully managed by **better-auth**. Do not manually modify these tables — interact with them only through better-auth.
+
+## Auth Tables (managed by better-auth)
+
+### user
 
 ```sql
-CREATE TABLE users (
+CREATE TABLE user (
   id TEXT PRIMARY KEY,
+  name TEXT NOT NULL,
   email TEXT NOT NULL UNIQUE,
-  password_hash TEXT NOT NULL,
-  created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+  email_verified BOOLEAN NOT NULL DEFAULT 0,
+  image TEXT,
+  created_at DATETIME NOT NULL,
+  updated_at DATETIME NOT NULL
+);
+```
+
+### session
+
+```sql
+CREATE TABLE session (
+  id TEXT PRIMARY KEY,
+  user_id TEXT NOT NULL,
+  token TEXT NOT NULL UNIQUE,
+  expires_at DATETIME NOT NULL,
+  ip_address TEXT,
+  user_agent TEXT,
+  created_at DATETIME NOT NULL,
+  updated_at DATETIME NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES user(id)
+);
+```
+
+### account
+
+```sql
+CREATE TABLE account (
+  id TEXT PRIMARY KEY,
+  user_id TEXT NOT NULL,
+  account_id TEXT NOT NULL,
+  provider_id TEXT NOT NULL,
+  access_token TEXT,
+  refresh_token TEXT,
+  access_token_expires_at DATETIME,
+  refresh_token_expires_at DATETIME,
+  scope TEXT,
+  id_token TEXT,
+  password TEXT,
+  created_at DATETIME NOT NULL,
+  updated_at DATETIME NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES user(id)
+);
+```
+
+### verification
+
+```sql
+CREATE TABLE verification (
+  id TEXT PRIMARY KEY,
+  identifier TEXT NOT NULL,
+  value TEXT NOT NULL,
+  expires_at DATETIME NOT NULL,
+  created_at DATETIME NOT NULL,
+  updated_at DATETIME NOT NULL
 );
 ```
 
 ---
 
-## Notes Table
+## Application Tables
+
+### notes
 
 ```sql
 CREATE TABLE notes (
@@ -257,7 +316,7 @@ CREATE TABLE notes (
   created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
   updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
 
-  FOREIGN KEY (user_id) REFERENCES users(id)
+  FOREIGN KEY (user_id) REFERENCES user(id)
 );
 ```
 
