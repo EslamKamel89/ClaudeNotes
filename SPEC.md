@@ -424,6 +424,21 @@ authenticated user
 
 Public share pages **do not require authentication**.
 
+## Authenticate Page
+
+```
+/authenticate
+```
+
+A single page used for both **login** and **register**.
+
+Accepts exactly two inputs:
+
+- `email`
+- `password`
+
+The user can toggle between login and register mode on the same page. No additional fields (e.g. name, confirm password) are shown.
+
 ---
 
 # 10. Authorization Rules
@@ -629,6 +644,16 @@ Shows note content.
 ```
 
 Editable editor.
+
+---
+
+### Authenticate
+
+```
+/authenticate
+```
+
+Combined login and register page. Accepts email and password only. User toggles between modes on the same page.
 
 ---
 
