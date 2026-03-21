@@ -1,5 +1,25 @@
 # CLAUDE.md
 
+We are building the app described in @SPEC.md.
+
+SPEC.md is the authoritative source for:
+
+- system architecture
+- database schema
+- data flow
+- constraints and invariants
+
+Only refer to @SPEC.md when:
+
+- making architectural decisions
+- modifying database schema or queries
+- implementing features that depend on data flow or auth rules
+- behavior is unclear or ambiguous
+
+Do not load it unnecessarily for small, isolated changes.
+
+Keep responses concise and focused. Avoid verbosity, filler, and unnecessary explanations. Provide only essential code, using minimal, targeted snippets.
+
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
 ## Commands
